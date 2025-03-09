@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .clock {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .weather {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .logo-container {
+            width: 80%;
+            height: 100px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-container img {
+            max-height: 100px;
+            margin: 0 10px;
+            transition: transform 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock"></div>
+    <div class="weather" id="weather">Caricamento meteo...</div>
+    <div class="logo-container" id="logoContainer"></div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        async function fetchWeather() {
+            const apiKey = 'TUO_API_KEY'; // Sostituisci con la tua API key di OpenWeatherMap
+            const city = 'Roma'; // Sostituisci con la tua città
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                document.getElementById('weather').textContent = `${data.weather[0].description}, ${data.main.temp}°C`;
+            } catch (error) {
+                document.getElementById('weather').textContent = "Errore nel caricamento del meteo";
+            }
+        }
+        fetchWeather();
+        setInterval(fetchWeather, 60000);
+        
+        function updateLogos() {
+            const logos = [
+                'logo1.png', 
+                'logo2.png', 
+                'logo3.png'
+            ];
+            const container = document.getElementById('logoContainer');
+            container.innerHTML = '';
+            logos.forEach(logo => {
+                const img = document.createElement('img');
+                img.src = logo;
+                container.appendChild(img);
+            });
+        }
+        updateLogos();
+    </script>
+</body>
+</html>
