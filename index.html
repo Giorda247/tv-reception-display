@@ -54,8 +54,8 @@
         updateClock();
 
         async function fetchWeather() {
-            const apiKey = 'TUO_API_KEY'; // Sostituisci con la tua API key di OpenWeatherMap
-            const city = 'Roma'; // Sostituisci con la tua città
+            const apiKey = 'b65b30f96cfcfd4766509450748d72a4'; // Sostituisci con la tua API key di OpenWeatherMap
+            const city = 'Perugia'; // Sostituisci con la tua città
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it`;
             try {
                 const response = await fetch(url);
